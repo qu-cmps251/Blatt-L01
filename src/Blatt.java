@@ -2,24 +2,11 @@ import java.util.Scanner;
 
 public class Blatt {
 
-	public static String typeToName(int charType) {
-		switch (charType) {
-		case 1:
-			return "Warrior";
-		case 2:
-			return "Thief";
-		case 3:
-			return "Mage";
-		case 4:
-			return "Sharpshooter";
-		}
-		// This should never occur
-		return "Invalid";
-	}
-
 	public static void main(String arg[]) {
 		String name;
 		int charType;
+		
+		Player p;
 
 		Scanner input = new Scanner(System.in);
 
@@ -46,8 +33,10 @@ public class Blatt {
 			charType = input.nextInt();
 
 		}
+		
+		p = new Player(name, charType);
 
-		System.out.printf("You chose %s\n", typeToName(charType));
+		System.out.printf("You chose %s\n", p.getCharTypeString());
 		
 		/*
 		 * if (charType == 1) { System.out.println("You chose Warrior"); } else
