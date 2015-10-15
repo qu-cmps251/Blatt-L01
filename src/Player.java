@@ -1,39 +1,72 @@
-
 public class Player {
 	private String name;
-	private int charType;
-	
-	public Player(String name, int charType) {
+	private CharacterType type;
+	private int currHp;
+	private int gold;
+
+	public Player() {
+		this.currHp = 20;
+		this.gold = 0;
+	}
+
+	public Player(String name) {
+		this();
 		this.name = name;
-		this.charType = charType;
+	}
+
+	public Player(String name, int charType) {
+		this(name);
+		this.type = new CharacterType(charType);
+	}
+
+	public Player(String name, String charType) {
+		this(name);
+		this.type = new CharacterType(charType);
 	}
 	
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCharType() {
-		return charType;
-	}
-	public void setCharType(int charType) {
-		this.charType = charType;
+
+	public CharacterType getType() {
+		return type;
 	}
 
-	public String getCharTypeString() {
-		switch (this.charType) {
-		case 1:
-			return "Warrior";
-		case 2:
-			return "Thief";
-		case 3:
-			return "Mage";
-		case 4:
-			return "Sharpshooter";
-		}
-		// This should never occur
-		return "Invalid";
+	public String getTypeString() {
+		return type.toString();
 	}
-	
+
+	public int setType(int numType) {
+		if (numType < 1 || numType > 3) {
+			return -1;
+		} else {
+			type = new CharacterType(numType);
+			return type.getType();
+		}
+	}
+
+	public int getCurrHp() {
+		return currHp;
+	}
+
+	public void setCurrHp(int currHp) {
+		this.currHp = currHp;
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	public String toString() {
+		return String.format("Name: %s\nType: %s\nHP: %d\nGold: %d\n",
+				this.name, this.type, this.currHp, this.gold);
+	}
 }

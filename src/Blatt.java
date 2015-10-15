@@ -1,50 +1,79 @@
 import java.util.Scanner;
 
 public class Blatt {
+	Player p = new Player();
 
-	public static void main(String arg[]) {
-		String name;
-		int charType;
-		
-		Player p;
-
-		Scanner input = new Scanner(System.in);
-
-		System.out.printf("                 Legend of Blatt               \n");
-		System.out.printf("-----------------------------------------------\n");
-		System.out.printf("Welcome, adventurer, to the land of Blatt, a\n");
-		System.out.printf("world of myth and legend.\n\n");
+	void getCharacterInfo(Scanner inp) {
+		int characterType;
 
 		System.out.printf("Please enter your name: ");
-		name = input.nextLine();
+		String name = inp.nextLine();
 
-		System.out.printf("Welcome, %s, to Blatt.\n", name);
+		p.setName(name);
 
-		System.out.printf("In order to continue, you must choose what\n");
-		System.out.printf("type of character you will be:\n");
-		System.out.printf("\t1) Warrior\n");
-		System.out.printf("\t2) Thief\n");
-		System.out.printf("\t3) Mage\n");
-		System.out.printf("\t4) Sharpshooter\n");
-		charType = input.nextInt();
+		System.out.printf("Welcome, %s, to Blatt.\n", p.getName());
 
-		while (charType < 1 || charType > 4) {
-			System.out.println("Please choose a number between 1 and 4: ");
-			charType = input.nextInt();
+		do {
+			System.out.printf("In order to continue, you must choose what\n");
+			System.out.printf("type of character you will be:\n");
+			System.out.printf("\t1) Warrior\n");
+			System.out.printf("\t2) Thief\n");
+			System.out.printf("\t3) Wizard\n");
+			System.out.printf("Please enter a number: ");
+			characterType = inp.nextInt();
 
+		} while (p.setType(characterType) < 0);
+
+		System.out.printf("Ok %s, you are a %s\n", p.getName(),
+				p.getTypeString());
+	}
+
+	int doMainMenu(Scanner inp) {
+		int val;
+
+		System.out.printf("\nMain Menu:\n");
+		System.out.printf("\t1) Go to the forest\n");
+		System.out.printf("\t2) Display player information\n");
+		System.out.printf("\t3) Quit\n");
+
+		val = inp.nextInt();
+		switch (val) {
+		case 1:
+			Forest f = new Forest(p,inp);
+			f.go();
+			break;
+		case 2:
+			System.out.println(p);
+			break;
+		case 3:
+			return -1;
 		}
-		
-		p = new Player(name, charType);
 
-		System.out.printf("You chose %s\n", p.getCharTypeString());
-		
-		/*
-		 * if (charType == 1) { System.out.println("You chose Warrior"); } else
-		 * if (charType == 2) { System.out.println("You chose Thief"); } else if
-		 * (charType == 3) { System.out.println("You chose Mage"); } else if
-		 * (charType == 4) { System.out.println("You chose Sharpshooter"); }
-		 */
+		return 0;
 
 	}
 
+	public Blatt() {
+		Scanner inp = new Scanner(System.in);
+
+		System.out.printf("                 Legend of Blatt               \n");
+		System.out.printf("-----------------------------------------------\n");
+		System.out.printf("Welcome, warrior, to the land of Blatt, a world\n");
+		System.out.printf("of myth and legend.\n\n");
+
+		getCharacterInfo(inp);
+
+		int ret = 0;
+		while (ret == 0) {
+			ret = doMainMenu(inp);
+		}
+		
+		System.out.printf("Thanks for playing Legend of Blatt!\n");
+		
+		inp.close();
+	}
+
+	public static void main(String[] args) {
+		new Blatt();
+	}
 }
