@@ -1,17 +1,17 @@
+
+
 import java.util.Scanner;
 
 public class Blatt {
-	Player p = new Player();
+	private Player p;
 
 	void getCharacterInfo(Scanner inp) {
-		int characterType;
+		int characterType=-1;
 
 		System.out.printf("Please enter your name: ");
-		String name = inp.nextLine();
+		String name = inp.nextLine();		
 
-		p.setName(name);
-
-		System.out.printf("Welcome, %s, to Blatt.\n", p.getName());
+		System.out.printf("Welcome, %s, to Blatt.\n", name);
 
 		do {
 			System.out.printf("In order to continue, you must choose what\n");
@@ -20,33 +20,49 @@ public class Blatt {
 			System.out.printf("\t2) Thief\n");
 			System.out.printf("\t3) Wizard\n");
 			System.out.printf("Please enter a number: ");
-			characterType = inp.nextInt();
+			String inpLine = inp.nextLine();
+			
+			try {
+				characterType = Integer.parseInt(inpLine);				
+			} catch (NumberFormatException nfe) {
+				// They didn't enter a number... restart the loop
+				continue;
+			}
+			
+		} while (characterType < 0 || characterType > 3);
 
-		} while (p.setType(characterType) < 0);
-
+		p = new Player(name, characterType);
+		
 		System.out.printf("Ok %s, you are a %s\n", p.getName(),
 				p.getTypeString());
 	}
 
 	int doMainMenu(Scanner inp) {
-		int val;
+		String val;
 
 		System.out.printf("\nMain Menu:\n");
-		System.out.printf("\t1) Go to the forest\n");
-		System.out.printf("\t2) Display player information\n");
-		System.out.printf("\t3) Quit\n");
+		System.out.printf("\tF) Go to the forest\n");
+		System.out.printf("\tS) Display player stats\n");
+		System.out.printf("\tQ) Quit\n");
 
-		val = inp.nextInt();
+		val = inp.nextLine();
 		switch (val) {
-		case 1:
+		case "F":
+		case "f":
 			Forest f = new Forest(p,inp);
 			f.go();
 			break;
-		case 2:
-			System.out.println(p);
+		case "S":
+		case "s":			
+			System.out.print(p);
 			break;
-		case 3:
-			return -1;
+		case "Q":
+		case "q":			
+			return -1;		
+		case "42":
+			System.out.printf("You found the secret menu.  You now have 5000 Gold.\n");
+			p.setGold(5000);
+			break;
 		}
 
 		return 0;

@@ -1,25 +1,17 @@
+
+
 public class CharacterType {
 	private int type;
 	
-	public CharacterType(int type) {
-		if (type >0 && type < 4) {
-			this.type = type;
-		}
+	public CharacterType() {
+		this.type = 1;
 	}
 	
-	public CharacterType(String type) {
-		switch (type) {
-		case "Warrior":
-			this.type = 1;
-			break;
-		case "Thief":
-			this.type = 2;
-			break;
-		case "Wizard":
-			this.type = 3;
-			break;
-		default:
-			this.type = 1;
+	public CharacterType(int type) {
+		this();
+		
+		if (type >0 && type < 4) {
+			this.type = type;
 		}
 	}
 	
