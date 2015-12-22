@@ -69,6 +69,21 @@ public class Blatt {
 
 	}
 
+	public Blatt(Player p) {
+		Scanner inp = new Scanner(System.in);
+		
+		this.p = p;
+		
+		int ret = 0;
+		while (ret == 0) {
+			ret = doMainMenu(inp);
+		}
+		
+		System.out.printf("Thanks for playing Legend of Blatt!\n");
+		
+		inp.close();
+	}
+	
 	public Blatt() {
 		Scanner inp = new Scanner(System.in);
 
